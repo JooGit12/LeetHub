@@ -1,29 +1,20 @@
+import java.util.HashMap;
+import java.util.Map;
+
 class Solution {
-	public int[] twoSum(int[] nums, int target) {
+    public int[] twoSum(int[] nums, int target) {
+        Map<Integer, Integer> numMap = new HashMap<>();
 
-		int[][] sortedNums = new int[nums.length][2];
+        for (int i = 0; i < nums.length; i++) {
+            int difference = target - nums[i];
 
-		for (int i = 0; i < nums.length; i++) {
-			sortedNums[i][0] = nums[i];
-			sortedNums[i][1] = i;
-		}
+            if (numMap.containsKey(difference)) {
+                return new int[]{numMap.get(difference), i};
+            }
 
-		Arrays.sort(sortedNums, (a, b) -> a[0] - b[0]);
+            numMap.put(nums[i], i);
+        }
 
-		int left = 0;
-		int right = nums.length - 1;
-
-		while (left < right) {
-			int sum = sortedNums[left][0] + sortedNums[right][0];
-			if (target > sum) {
-				left++;
-			} else if (target < sum) {
-				right--;
-			} else {
-				return new int[] { sortedNums[left][1], sortedNums[right][1] };
-			}
-		}
-
-		return new int[] {};
-	}
+        return new int[]{};
+    }
 }
